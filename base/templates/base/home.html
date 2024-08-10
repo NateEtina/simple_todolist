@@ -1,0 +1,64 @@
+
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .heading{
+        font-size: 2rem;
+    }
+    article{
+        border: 2px solid rgb(142, 142, 162);
+        border-radius: 4px;
+        margin: 1% 0%; padding: 1% 1%;
+        width: 50%;
+    }
+    article a{
+        color: rgb(53, 53, 133);
+    }
+    aside{
+        text-align: right;
+    }
+    section{
+        margin: 2% 2%;
+    }
+    section .subheading{
+        font-size: 1.5rem;
+    }
+    section .addlist_btn{
+        border: 2px solid rgb(53, 53, 133);
+        border-radius: 4px;
+        box-shadow: 2px 2px 2px rgba(53, 53, 133, 0.5);
+        color: rgb(53, 53, 133);
+        padding: .5% 1.5%;
+    }
+</style>
+
+<span class="heading">To do list application</span>
+<p>
+    Personal or team work can be organized and scheduled for more perfomance and productivity.
+</p>
+
+<section>
+    <span class="subheading">{{tasklists_count}} task list(s) set</span> 
+
+    {% for items in list_tasklists %}
+    <article>
+        <div class="box">
+            <a href="{% url 'list' items.0.id %}" class="action_btn">{{items.0.listTitle}} | {{items.1}} tasks</a>
+        </div>     
+        <aside class="box"> 
+            <a href="{% url 'list' items.0.id %}">
+                <img src="{% static 'icons/crayon-48.png' %}" alt="" class="icons_">
+            </a>
+            <a href="{% url 'delete-list' items.0.id %}">
+                <img src="{% static 'icons/supprimer-pour-toujours-50.png' %}" alt="" class="icons_">
+            </a>
+        </aside>
+    </article>
+    {% endfor %}
+    <p>
+        <a href="{% url 'addlist' %}" class="addlist_btn">Add list</a>
+    </p>
+</section>
+{% endblock content %}

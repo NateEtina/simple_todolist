@@ -1,0 +1,11 @@
+
+
+Super user : 
+Username : lenovo
+pwd : lnv1234pwd
+
+| Things to do to finish the project
+
+- Way to modify and delete a task
+- Way to check a task
+- Modify the global css style

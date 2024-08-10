@@ -1,0 +1,84 @@
+
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<style>
+    article{
+        background-color: rgba(128, 128, 128, 0.2);
+        border-radius: 5px;
+        margin: 1% 0%; padding: 1%;
+        width: fit-content;
+    }
+    article .checkbox-control{
+        line-height: 1.1;  
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 0.3em;
+    }
+    .checkbox-control input[type="checkbox"] {
+        margin: 0;
+        width: 1em;height: 1em;
+    }
+    .checkbox-control input:checked ~ .checkmark {
+      text-decoration: line-through;
+    }
+    section .task-textfield{
+        margin: 2% 5%;
+    }
+    .textfield{
+        border: 0px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        margin: 0% 1%; padding: 1% 0%;
+        width: 500px;
+    }
+    .textfield:focus{
+        border-bottom: 1px solid; outline: none !important;
+    }
+</style>
+
+<div>
+    <!-- list title -->
+    {{tasklist.listTitle}}
+    <a href="{% url 'update-list' tasklist.id %}">
+        <img src="{% static 'icons/crayon-48.png' %}" alt="" class="icons__">
+    </a>
+</div>
+
+<section>
+    <!-- listing all tasks -->
+    {% for task in unachievedTask %}
+    <article>
+        <label class="checkbox-control">
+            <input type="checkbox" name="checkbox"><span class="checkmark">{{task.taskline}}</span>
+        </label>
+        <aside>
+            <a href="#">
+                <img src="{% static 'icons/crayon-48.png' %}" alt="" class="icons__">
+            </a>
+            <a href="{% url 'delete-task' task.id %}">
+                <img src="{% static 'icons/supprimer-pour-toujours-50.png' %}" alt="" class="icons__">
+            </a>
+            <a href="{% url 'achieve-task' task.id %}">achieve</a>
+        </aside>
+
+    </article>   
+    {% endfor %}
+    {% for task in achievedTask %}
+    <p>{{task}}</p>
+    {% endfor %}
+
+    <div class="task-textfield">
+        <!-- form to add a new task -->
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="">add a task : </label>
+            <input type="text" name="body" placeholder="write task here" class="textfield">
+        </form>
+    </div>
+</section>
+<a href={% url 'home' %}>
+    <img src="{% static 'icons/homepage.png' %}" alt="" class="icons_">
+</a>
+
+{% endblock content %}
+
